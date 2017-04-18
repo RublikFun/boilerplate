@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="shortcut icon" href="img/favicon/favicon.png" type="image/x-icon">
+    <title>Project name</title>
+    <!-- ===================== css ====================== -->
+    <link rel="stylesheet" href="css/vendor/magnific-popup.css">
+    <link rel="stylesheet" href="css/vendor/normalize.css">
+    <link rel="stylesheet" href="css/vendor/animate.css">
+    <link rel="stylesheet" href="css/main.min.css">
+</head>
+<body>
+    <!-- Project HTML -->
+    <header>
+        Header
+    </header>
+
+    <main>
+        Main
+    </main>
+
+    <footer>
+        Footer
+    </footer>
+    <!-- / -->
+    <!-- =============== vendor javascript ================ -->
+    <script src="js/vendor/jquery-3.1.1.min.js"></script>
+    <script src="js/vendor/jquery.magnific-popup.min.js"></script>
+    <script src="js/vendor/wow.min.js"></script>
+    <!-- ================ our javascript ================== -->
+    <script src="js/main.min.js"></script>
+
+    <script>
+        wow = new WOW({
+            animateClass: 'animated',
+            offset:       100,
+            callback:     function(box) {
+                console.log("WOW: animating <" + box.tagName.toLowerCase() + ">")
+            }
+        });
+        wow.init();
+    </script>
+</body>
+</html>
