@@ -1,0 +1,22 @@
+.container {
+    width: 1140px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+
+    @include bp($lg) {
+        width: 940px;
+    }
+
+    @include bp($md) {
+        width: 720px;
+    }
+
+    @include bp($sm) {
+        width: 544px;
+    }
+
+    @include bp($xs) {
+        width: 100%;
+    }
+}

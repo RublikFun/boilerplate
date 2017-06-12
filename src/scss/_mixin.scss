@@ -1,54 +1,42 @@
-//Media
-$xs-width: 576px;
-$sm-width: 768px;
-$md-width: 992px;
-$lg-width: 1200px;
-
-@mixin xs {
-  @media (max-width: #{$xs-width}) {
-    @content;
-  }
+@mixin bp($querystring) {
+    $valid : true;
+    @if type-of($querystring) != "string" {
+        @warn "querystring: #{$querystring} is not a string";
+        $valid : false;
+    }
+    @if $valid == true {
+        @media #{$querystring} {
+            @content;
+        }
+    }
 }
 
-@mixin sm {
-  @media (max-width: #{$sm-width}) {
-    @content;
-  }
+@mixin firefox() {
+    @-moz-document url-prefix() {
+        @content;
+    }
 }
 
-@mixin md {
-  @media (min-width: #{$sm-width}) and (max-width: #{$md-width - 1px}) {
-    @content;
-  }
-}
-
-@mixin lg {
-  @media (min-width: #{$md-width}) and (max-width: #{$lg-width - 1px}) {
-    @content;
-  }
-}
-@mixin xl {
-  @media (min-width: #{$lg-width}) {
-    @content;
-  }
+@mixin placeholder {
+    ::-webkit-input-placeholder {@content}
+    :-moz-placeholder           {@content}
+    ::-moz-placeholder          {@content}
+    :-ms-input-placeholder      {@content}
 }
 
 @function em($pixels, $context: $browser-context) {
-  @return #{$pixels/$context}em
+    @return #{$pixels/$context}em
 }
 
-// =============================================================================
-// String Replace
-// =============================================================================
 
 @function str-replace($string, $search, $replace: "") {
-  $index: str-index($string, $search);
+    $index: str-index($string, $search);
 
-  @if $index {
-    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
-  }
+    @if $index {
+        @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    }
 
-  @return $string;
+    @return $string;
 }
 
 // =============================================================================
@@ -56,50 +44,50 @@ $lg-width: 1200px;
 // =============================================================================
 
 @mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff ttf svg) {
-  $src: null;
+    $src: null;
 
-  $extmods: (
-    eot: "?",
-    svg: "#" + str-replace($name, " ", "_")
-  );
+    $extmods: (
+        eot: "?",
+        svg: "#" + str-replace($name, " ", "_")
+    );
 
-  $formats: (
-    otf: "opentype",
-    ttf: "truetype"
-  );
+    $formats: (
+        otf: "opentype",
+        ttf: "truetype"
+    );
 
-  @each $ext in $exts {
-    $extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
-    $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
-    $src: append($src, url(quote($path + "." + $extmod)) format(quote($format)), comma);
-  }
+    @each $ext in $exts {
+        $extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+        $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+        $src: append($src, url(quote($path + "." + $extmod)) format(quote($format)), comma);
+    }
 
-  @font-face {
-    font-family: quote($name);
-    font-style: $style;
-    font-weight: $weight;
-    src: $src;
-  }
+    @font-face {
+        font-family: quote($name);
+        font-style: $style;
+        font-weight: $weight;
+        src: $src;
+    }
 }
 
 // Centered block
 @mixin centerer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 @mixin centererHorizont {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0%);
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
 }
 
 @mixin centererVertical {
-  position: absolute;
-  top: 50%;
-  transform: translate(0%, -50%);
+    position: absolute;
+    top: 50%;
+    transform: translate(0%, -50%);
 }
 
 // Background Gradient: Top to Bottom
@@ -126,33 +114,13 @@ $lg-width: 1200px;
     filter:            progid:DXImageTransform.Microsoft.gradient(start-colourStr='#{$start-colour}', end-colourStr='#{$end-colour}', gradientType='1');
 }
 
-//box-shadow
-
-@mixin box-shadow($top, $left, $blur, $spread, $color, $inset: false) {
-  @if $inset {
-    -webkit-box-shadow:inset $top $left $blur $spread $color;
-    -moz-box-shadow:inset $top $left $blur $spread $color;
-    box-shadow:inset $top $left $blur $spread $color;
-  } @else {
-    -webkit-box-shadow: $top $left $blur $spread $color;
-    -moz-box-shadow: $top $left $blur $spread $color;
-    box-shadow: $top $left $blur $spread $color;
-  }
-}
-
 // PX to REM
 @function calculateRem($size) {
-  $remSize: $size / 16px;
-  @return $remSize * 1rem;
+    $remSize: $size / 16px;
+    @return $remSize * 1rem;
 }
 
 @mixin font-size($size) {
-  font-size: $size;
-  font-size: calculateRem($size);
-}
-
-@mixin opacity($opacity) {
-  opacity: $opacity;
-  $opacity-ie: $opacity * 100;
-  filter: alpha(opacity=$opacity-ie); //IE8
+    font-size: $size;
+    font-size: calculateRem($size);
 }

@@ -1,11 +1,9 @@
 /* ==========================================================================
-   Base Font Family
+   Font Family
    ========================================================================== */
 /*Raleway*/
 @include font-face(Raleway-Regular, '../fonts/raleway/raleway-regular-webfont');
-@include font-face(Raleway-Light, '../fonts/raleway/raleway-light-webfont');
-@include font-face(Raleway-Medium, '../fonts/raleway/raleway-medium-webfont');
-@include font-face(Raleway-Semibold, '../fonts/raleway/raleway-semibold-webfont');
-@include font-face(Raleway-Bold, '../fonts/raleway/raleway-bold-webfont');
-@include font-face(Raleway-BoldItalik, '../fonts/raleway/raleway-bold-italic-webfont');
-@include font-face(Raleway-ExtraBold, '../fonts/raleway/raleway-extrabold-webfont');
+
+body {
+    font-family: 'Raleway-Regular', sans-serif;
+}

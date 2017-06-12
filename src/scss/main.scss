@@ -7,8 +7,7 @@
    Base styles: opinionated defaults
    ========================================================================== */
 html,
-body {
-    font-family: 'Raleway-Regular', sans-serif;
+body {    
     line-height: 1;
     background: #fff;
     &.overflowHidden {
@@ -42,13 +41,7 @@ p {
 a {
 
 }
-/*
- * Remove text-shadow in selection highlight:
- * https://twitter.com/miketaylr/status/12228805301
- *
- * These selection rule sets have to be separate.
- * Customize the background color to match your design.
- */
+
 ::-moz-selection {
     background: #b3d4fc;
     text-shadow: none;
@@ -100,17 +93,10 @@ a {
     padding: 0.2em 0;
 }
 
-/*
- * Hide visually and from screen readers
- */
 .hidden {
     display: none !important;
 }
 
-/*
- * Hide only visually, but have it available for screen readers:
- * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
- */
 .visuallyhidden {
     border: 0;
     clip: rect(0 0 0 0);
@@ -122,11 +108,6 @@ a {
     width: 1px;
 }
 
-/*
- * Extends the .visuallyhidden class to allow the element
- * to be focusable when navigated to via the keyboard:
- * https://www.drupal.org/node/897638
- */
 .visuallyhidden.focusable:active,
 .visuallyhidden.focusable:focus {
     clip: auto;
@@ -137,9 +118,6 @@ a {
     width: auto;
 }
 
-/*
- * Hide visually and from screen readers, but maintain layout
- */
 .invisible {
     visibility: hidden;
 }
@@ -169,11 +147,6 @@ a {
     /* Style adjustments for high resolution devices */
 }
 
-/* ==========================================================================
-   Print styles.
-   Inlined to avoid the additional HTTP request:
-   http://www.phpied.com/delay-loading-your-print-css/
-   ========================================================================== */
 @media print {
     *,
     *:before,
@@ -181,8 +154,7 @@ a {
     *:first-letter,
     *:first-line {
         background: transparent !important;
-        color: #000 !important; /* Black prints faster:
-                                   http://www.sanbeiji.com/archives/953 */
+        color: #000 !important;
         box-shadow: none !important;
         text-shadow: none !important;
     }
@@ -200,11 +172,6 @@ a {
         content: " (" attr(title) ")";
     }
 
-    /*
-     * Don't show links that are fragment identifiers,
-     * or use the `javascript:` pseudo protocol
-     */
-
     a[href^="#"]:after,
     a[href^="javascript:"]:after {
         content: "";
@@ -215,11 +182,6 @@ a {
         border: 1px solid #999;
         page-break-inside: avoid;
     }
-
-    /*
-     * Printing Tables:
-     * http://css-discuss.incutio.com/wiki/Printing_Tables
-     */
 
     thead {
         display: table-header-group;
@@ -240,13 +202,13 @@ a {
         orphans: 3;
         widows: 3;
     }
-
     h2,
     h3 {
         page-break-after: avoid;
     }
 }
 
+@import '_container.scss';
 @import '_public.scss';
 @import '_blocks.scss';
 @import '_footer.scss';
