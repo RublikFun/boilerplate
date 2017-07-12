@@ -17,9 +17,14 @@
 @include font-face(Raleway, '../fonts/raleway/raleway-regular',    400, normal, eot woff ttf svg);
 @include font-face(Raleway, '../fonts/raleway/raleway-light',      300, normal, eot woff ttf svg);
 
-/* Body */
+/* Font set */
 body {
     font-family: 'Raleway', sans-serif;
     font-weight: 400;
     font-size: $fs;
+    /* fonts rendering */
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.005);
 }
