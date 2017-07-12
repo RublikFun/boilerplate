@@ -1,7 +1,18 @@
 {% extends "layout.html" %}
 
-{% block content %}
-<section>
-    <h1>Index page</h1>
-</section>
-{% endblock content %}
+    {% block content %}
+    <section>
+        <div class="container">
+            <h1>Index page</h1>
+        </div>
+    </section>
+    <!-- Same Block -->
+    {% set
+        sameBlock = {
+            itemTitle: 'Heading H2',
+            itemDescription: 'Small description'
+        }
+    %}
+    {% include "partials/same-block.html" %}
+    <!-- / -->
+    {% endblock content %}

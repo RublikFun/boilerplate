@@ -7,14 +7,9 @@
    Base styles: opinionated defaults
    ========================================================================== */
 html,
-body {    
+body {
     line-height: 1;
     background: #fff;
-    &.overflowHidden {
-        overflow: hidden;
-        position: relative;
-        height: 100%;
-    }
 }
 main {
     overflow-x: hidden;
@@ -33,13 +28,6 @@ main {
 
 img {
     max-width: 100%
-}
-
-p {
-
-}
-a {
-
 }
 
 ::-moz-selection {
@@ -209,6 +197,7 @@ a {
 }
 
 @import '_container.scss';
+@import '_header.scss';
 @import '_public.scss';
 @import '_blocks.scss';
 @import '_footer.scss';

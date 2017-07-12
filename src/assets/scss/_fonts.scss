@@ -1,9 +1,25 @@
 /* ==========================================================================
    Font Family
    ========================================================================== */
-/*Raleway*/
-@include font-face(Raleway-Regular, '../fonts/raleway/raleway-regular-webfont');
+/*Avenir Next*/
+@include font-face(AvenirNext, '../fonts/avenir-next/avenir-next-bold',    700, normal, eot woff ttf svg);
+@include font-face(AvenirNext, '../fonts/avenir-next/avenir-next-demi',    600, normal, eot woff ttf svg);
+@include font-face(AvenirNext, '../fonts/avenir-next/avenir-next-medium',  500, normal, eot woff ttf svg);
+@include font-face(AvenirNext, '../fonts/avenir-next/avenir-next-regular', 400, normal, eot woff ttf svg);
+@include font-face(AvenirNext, '../fonts/avenir-next/avenir-next-light',   300, normal, eot woff ttf svg);
+@include font-face(AvenirNext, '../fonts/avenir-next/avenir-next-thin',    100, normal, eot woff ttf svg);
 
+/*Avenir Next*/
+@include font-face(Raleway, '../fonts/raleway/raleway-extrabold',  800, normal, eot woff ttf svg);
+@include font-face(Raleway, '../fonts/raleway/raleway-bold',       700, normal, eot woff ttf svg);
+@include font-face(Raleway, '../fonts/raleway/raleway-semibold',   600, normal, eot woff ttf svg);
+@include font-face(Raleway, '../fonts/raleway/raleway-medium',     500, normal, eot woff ttf svg);
+@include font-face(Raleway, '../fonts/raleway/raleway-regular',    400, normal, eot woff ttf svg);
+@include font-face(Raleway, '../fonts/raleway/raleway-light',      300, normal, eot woff ttf svg);
+
+/* Body */
 body {
-    font-family: 'Raleway-Regular', sans-serif;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    font-size: $fs;
 }

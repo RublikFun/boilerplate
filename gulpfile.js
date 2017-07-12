@@ -4,6 +4,7 @@ var gulp           = require('gulp'),
     concat         = require('gulp-concat'),
     sass           = require('gulp-sass'),
     autoprefixer   = require('gulp-autoprefixer'),
+    htmlbeautify   = require('gulp-html-beautify'),
     sourcemaps     = require('gulp-sourcemaps'),
     uglify         = require('gulp-uglify'),
     changed        = require('gulp-changed'),
@@ -11,8 +12,9 @@ var gulp           = require('gulp'),
 	notify         = require('gulp-notify'),
 	plumber        = require('gulp-plumber'),
 	stripDebug     = require('gulp-strip-debug'),
-    http           = require('http'),
     cssnano        = require('gulp-cssnano'),
+    rename         = require('gulp-rename'),
+    htmlreplace    = require('gulp-html-replace'),
     del            = require('del'),
     livereload     = require('browser-sync');
 
@@ -47,16 +49,28 @@ var gulp           = require('gulp'),
     });
 
     // Copy fonts from a module outside of our project (like Bower)
-    gulp.task('build', ['del', 'images'], function() { //
+    gulp.task('build', ['html', 'scripts', 'styles', 'del', 'images'], function() { //
         gulp.src(PATHS.devDir + '/*.html')
+        .pipe(htmlreplace({
+            'css': 'assets/css/style.min.css',
+            'js' : 'assets/js/bundle.min.js'
+        }))
         .pipe(gulp.dest(PATHS.output))
 
-        gulp.src(['src/assets/**/*', '!src/assets/scss', '!src/assets/**/*.scss'])
+        gulp.src([
+            'src/assets/**/*',
+            '!src/assets/scss', '!src/assets/**/*.scss',
+            '!src/assets/css/vendor', '!src/assets/css/vendor/**/*.css', '!src/assets/css/style.css',
+            '!src/assets/js/vendor', '!src/assets/js/vendor/**/*.js', '!src/assets/js/main.js'
+        ])
     	.pipe(gulp.dest(PATHS.output + '/assets/'))
     });
 
     // Process HTML
     gulp.task('html', function () {
+        var options = {
+            "indent_size" : 4
+        };
         return gulp.src(PATHS.pages + '/*.html')
             .pipe(plumber({
                 errorHandler: onError
@@ -65,6 +79,7 @@ var gulp           = require('gulp'),
                 path: [PATHS.templates],
                 watch: true,
             }))
+            .pipe(htmlbeautify(options))
             .pipe(gulp.dest(PATHS.devDir + '/'))
             .pipe(livereload.reload({stream: true}))
             .pipe(notify({ message: 'HTML task complete' }));
@@ -72,13 +87,21 @@ var gulp           = require('gulp'),
 
     // Process Stylesheets
     gulp.task('styles', function () {
-        gulp.src(PATHS.devDir + '/assets/scss/main.scss')
+        gulp.src([
+                PATHS.devDir + '/assets/css/vendor/normalize.css',
+                PATHS.devDir + '/assets/css/vendor/magnific-popup.css',
+                PATHS.devDir + '/assets/css/vendor/owl.carousel.css',
+                PATHS.devDir + '/assets/css/vendor/animate.css',
+                PATHS.devDir + '/assets/scss/main.scss'
+            ])
             .pipe(sass().on('error', sass.logError))
             .pipe(autoprefixer({
-              browsers: ['last 2 versions']  // config object
+                browsers: ['last 2 versions']  // config object
             }))
+            .pipe(concat('style.css'))
+            .pipe(gulp.dest(PATHS.devDir + '/assets/css'))
             .pipe(cssnano())
-            .pipe(concat('main.min.css'))
+            .pipe(rename('style.min.css'))
             .pipe(gulp.dest(PATHS.devDir + '/assets/css'))
             .pipe(livereload.reload({stream: true}))
             .pipe(notify({ message: 'Styles task complete' }));
@@ -102,14 +125,21 @@ var gulp           = require('gulp'),
     //Combine/Minify Javascript
     gulp.task('scripts', function() {
     return gulp.src([
+            PATHS.devDir + '/assets/js/vendor/jquery-3.1.1.min.js',
+            PATHS.devDir + '/assets/js/vendor/jquery.magnific-popup.min.js',
+            PATHS.devDir + '/assets/js/vendor/owl.carousel.min.js',
+            PATHS.devDir + '/assets/js/vendor/jquery.disablescroll.js',
+            PATHS.devDir + '/assets/js/vendor/jquery.validate.js',
+            PATHS.devDir + '/assets/js/vendor/wow.min.js',
             PATHS.devDir + '/assets/js/main.js'
         ])
         .pipe(plumber({
             errorHandler: onError
         }))
-        .pipe(concat('main.min.js'))
+        .pipe(concat('bundle.js'))
         .pipe(stripDebug())
         .pipe(uglify())
+        .pipe(rename('bundle.min.js'))
         .pipe(gulp.dest(PATHS.devDir + '/assets/js'))
         .pipe(livereload.reload({stream: true}))
         .pipe(notify({ message: 'Scripts task complete' }));
@@ -118,11 +148,12 @@ var gulp           = require('gulp'),
     gulp.task('watch', function() {
         // Watch HTML
         gulp.watch(PATHS.pages + '/*.html', ['html']);
+        gulp.watch(PATHS.templates + '/**/*.html', ['html']);
 
     	// Whenever a stylesheet is changed, recompile
         gulp.watch(PATHS.devDir + '/assets/scss/**/*.scss', ['styles']);
 
     	// If user-developed Javascript is modified, re-run our hinter and scripts tasks
-    	gulp.watch(PATHS.devDir + '/assets/js/**/*.js', ['scripts']);
+    	gulp.watch([PATHS.devDir + '/assets/js/main.js', PATHS.devDir + '/assets/js/vendor/**/*.js' ], ['scripts']);
 
     });
